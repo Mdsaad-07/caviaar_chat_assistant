@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware  # Only import once
 from dotenv import load_dotenv
 import os
 from openai import OpenAI
@@ -14,19 +14,21 @@ load_dotenv()
 app = FastAPI()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-from fastapi.middleware.cors import CORSMiddleware
-
+# Add CORS middleware right after app creation
 origins = [
-    "https://caviaarmode-assistant.netlify.app"
+    "https://caviaarmode-assistant.netlify.app"  # Exact Netlify URL (no trailing slash)
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,            # [REQUIRED] your Netlify URL only!
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Rest of your code (token tracking, routes, etc.) goes here...
+
 
 
 # Token tracking system (use Redis in production)
