@@ -22,7 +22,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=origins,            # [REQUIRED] your Netlify URL only!
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
