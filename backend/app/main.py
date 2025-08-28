@@ -14,14 +14,20 @@ load_dotenv()
 app = FastAPI()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-# CORS middleware for frontend access
+from fastapi.middleware.cors import CORSMiddleware
+
+origins = [
+    "https://caviaarmode-assistant.netlify.app"
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001", "https://caviaarmode.com"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # Token tracking system (use Redis in production)
 user_tokens = defaultdict(lambda: {"count": 0, "date": datetime.now().date()})
