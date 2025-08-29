@@ -278,5 +278,17 @@ def get_token_usage(session_id: str):
         "tokens_remaining": MAX_TOKENS_PER_DAY - user_data["count"],
         "date": str(user_data["date"])
     }
+@app.options("/")
+async def options_root():
+    return {}
+
+@app.get("/")
+async def root():
+    return {"message": "Root is live"}
+    
+@app.get("/")
+def root():
+    return {"message": "Root is live"}
+    
 
 print("OPENAI_API_KEY:", "Set" if os.getenv("OPENAI_API_KEY") else "Not set")
