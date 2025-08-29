@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, HTTPException
-from fastapi.middleware.cors import CORSMiddleware  # Only import once
+from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import os
 from openai import OpenAI
@@ -26,10 +26,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Rest of your code (token tracking, routes, etc.) goes here...
-
-
 
 # Token tracking system (use Redis in production)
 user_tokens = defaultdict(lambda: {"count": 0, "date": datetime.now().date()})
@@ -144,8 +140,8 @@ def classify_query(user_query: str) -> str:
     
     # Greetings / small-talk
     if any(word in lc for word in ["hello", "hi", "hey", "good morning",
-                                   "good evening", "how are you", "whats up",
-                                   "how's it going"]):
+                                  "good evening", "how are you", "whats up",
+                                  "how's it going"]):
         return "greeting"
     
     if not is_ecommerce_query(user_query):
@@ -278,6 +274,7 @@ def get_token_usage(session_id: str):
         "tokens_remaining": MAX_TOKENS_PER_DAY - user_data["count"],
         "date": str(user_data["date"])
     }
+
 @app.options("/")
 async def options_root():
     return {}
@@ -285,10 +282,6 @@ async def options_root():
 @app.get("/")
 async def root():
     return {"message": "Root is live"}
-    
-@app.get("/")
-def root():
-    return {"message": "Root is live"}
-    
 
 print("OPENAI_API_KEY:", "Set" if os.getenv("OPENAI_API_KEY") else "Not set")
+</query>
